@@ -1,0 +1,6 @@
+{
+    "terminal.integrated.env.linux": {
+        "PATH": "/home/andya/.platformio/penv/bin:/home/andya/.platformio/penv:/home/andya/bmp/gcc-arm-none-eabi-7-2017-q4-major/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/usr/local/sbin:/usr/sbin:/sbin:/home/andya/tools/z88dk/bin",
+        "PLATFORMIO_CALLER": "vscode"
+    }
+}
