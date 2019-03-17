@@ -46,11 +46,11 @@
  */
 
 /*-------------DEFINE YOUR  NETWORK PARAMETERS BELOW----------------*/
-#if defined(ESP8266)  // for nodemcu, weemos and esp8266
+#if defined(ESP8266) || defined(ESP32)  // for nodemcu, weemos and esp8266
   //#define ESPWifiManualSetup true //uncomment you don't want to use wifimanager for your credential settings on ESP
 #endif
 
-#if defined(ESP32) || defined(ESPWifiManualSetup) // for nodemcu, weemos and esp8266
+#if defined(ESPWifiManualSetup) // for nodemcu, weemos and esp8266/esp32
   #define wifi_ssid "wifi ssid"
   #define wifi_password "wifi password"
 #else // for arduino + W5100
@@ -77,26 +77,26 @@ char mqtt_port[6] = "1883";
 /*-------------DEFINE THE MODULES YOU WANT BELOW----------------*/
 //Addons and module management, comment the Z line
 
-#define ZgatewayRF     "RF"       //ESP8266, Arduino, ESP32
-#define ZgatewayRF315  "RF315"    //ESP8266, Arduino, ESP32
-#define ZgatewayIR     "IR"       //ESP8266, Arduino,         Sonoff RF Bridge
-#define ZgatewayLORA   "LORA"       //ESP8266, Arduino, ESP32
-#define ZgatewayPilight "Pilight" //ESP8266, Arduino, ESP32
+//#define ZgatewayRF     "RF"       //ESP8266, Arduino, ESP32
+//#define ZgatewayRF315  "RF315"    //ESP8266, Arduino, ESP32
+//#define ZgatewayIR     "IR"       //ESP8266, Arduino,         Sonoff RF Bridge
+//#define ZgatewayLORA   "LORA"       //ESP8266, Arduino, ESP32
+//#define ZgatewayPilight "Pilight" //ESP8266, Arduino, ESP32
 //#define ZgatewayBT     "BT"       //ESP8266, Arduino, ESP32
-#define ZgatewayRF2    "RF2"      //ESP8266, Arduino, ESP32
+//#define ZgatewayRF2    "RF2"      //ESP8266, Arduino, ESP32
 //#define ZgatewaySRFB   "SRFB"     //                          Sonoff RF Bridge
-#define Zgateway2G     "2G"       //ESP8266, Arduino, ESP32
+//#define Zgateway2G     "2G"       //ESP8266, Arduino, ESP32
 #define ZgatewayRFM69  "RFM69"    //ESP8266, Arduino, ESP32
-#define ZactuatorONOFF "ONOFF"    //ESP8266, Arduino, ESP32,  Sonoff RF Bridge
-#define ZsensorINA226  "INA226"   //ESP8266, Arduino, ESP32
-#define ZsensorHCSR501 "HCSR501"  //ESP8266, Arduino, ESP32,  Sonoff RF Bridge
-#define ZsensorADC     "ADC"      //ESP8266, Arduino, ESP32
+//#define ZactuatorONOFF "ONOFF"    //ESP8266, Arduino, ESP32,  Sonoff RF Bridge
+//#define ZsensorINA226  "INA226"   //ESP8266, Arduino, ESP32
+//#define ZsensorHCSR501 "HCSR501"  //ESP8266, Arduino, ESP32,  Sonoff RF Bridge
+//#define ZsensorADC     "ADC"      //ESP8266, Arduino, ESP32
 //#define ZsensorBH1750  "BH1750"   //ESP8266, Arduino, ESP32
-#define ZsensorTSL2561 "TSL2561"  //ESP8266, Arduino, ESP32
+//#define ZsensorTSL2561 "TSL2561"  //ESP8266, Arduino, ESP32
 #define ZsensorBME280  "BME280"   //ESP8266, Arduino, ESP32
-#define ZsensorDHT     "DHT"      //ESP8266, Arduino, ESP32,  Sonoff RF Bridge
-#define ZsensorGPIOKeyCode "GPIOKeyCode" //ESP8266, Arduino, ESP32
-#define ZsensorGPIOInput "GPIOInput" //ESP8266, Arduino, ESP32
+//#define ZsensorDHT     "DHT"      //ESP8266, Arduino, ESP32,  Sonoff RF Bridge
+//#define ZsensorGPIOKeyCode "GPIOKeyCode" //ESP8266, Arduino, ESP32
+//#define ZsensorGPIOInput "GPIOInput" //ESP8266, Arduino, ESP32
 #define ZmqttDiscovery "HADiscovery"//ESP8266, Arduino, ESP32, Sonoff RF Bridge
 
 /*-------------DEFINE YOUR ADVANCED NETWORK PARAMETERS BELOW----------------*/

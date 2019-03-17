@@ -154,10 +154,15 @@ boolean connectedOnce = false; //indicate if we have been connected once to MQTT
 
 int failure_number = 0; // number of failure connecting to MQTT
 
+static void setup_wifimanager(boolean reset_settings);
+
 #ifdef ESP32
   #include <WiFi.h>
   #include <ArduinoOTA.h>
   #include <WiFiUdp.h>
+  #include <DNSServer.h>
+  #include <WiFiManager.h>
+  #include <SPIFFS.h>
   WiFiClient eClient;
   #ifdef MDNS_SD
     #include <ESPmDNS.h>
@@ -222,12 +227,12 @@ boolean reconnect() {
 
       if (failure_number > maxMQTTretry){
         trc(F("failed connecting to mqtt"));
-        #if defined(ESP8266) && !defined(ESPWifiManualSetup)
+        #if (defined(ESP8266) || defined(ESP32)) && !defined(ESPWifiManualSetup)
           if (!connectedOnce) {
             trc(F("fail connecting to mqtt, reseting wifi manager"));
             setup_wifimanager(true); // if we didn't connected once to mqtt we reset and start in AP mode again to have a chance to change the parameters
           }
-        #elif defined(ESP32) || defined(ESPWifiManualSetup)// ESP32 case we don't use Wifi manager yet
+        #elif defined(ESPWifiManualSetup)// ESP32 case we don't use Wifi manager yet
           setup_wifi();
         #endif
       }
@@ -268,9 +273,9 @@ void setup()
       #endif
     #endif
     
-    #if defined(ESP8266) && !defined(ESPWifiManualSetup)
+    #if (defined(ESP8266) || defined(ESP32)) && !defined(ESPWifiManualSetup)
       setup_wifimanager(false);
-    #else // ESP32 case we don't use Wifi manager yet
+    #else // we don't use Wifi manager
       setup_wifi();
     #endif
 
@@ -411,7 +416,7 @@ void setup()
 }
 
 
-#if defined(ESP32) || defined(ESPWifiManualSetup)
+#if defined(ESPWifiManualSetup)
 void setup_wifi() {
   delay(10);
   int failureAttempt = 0; //DIRTY FIX ESP32 waiting for https://github.com/espressif/arduino-esp32/issues/653
@@ -435,7 +440,7 @@ void setup_wifi() {
   trc(F("WiFi ok with manual config credentials"));
 }
 
-#elif defined(ESP8266) && !defined(ESPWifiManualSetup)
+#elif (defined(ESP8266) || defined(ESP32)) && !defined(ESPWifiManualSetup)
 //Wifi manager parameters
 //flag for saving data
 bool shouldSaveConfig = true;
@@ -447,7 +452,7 @@ void saveConfigCallback () {
   shouldSaveConfig = true;
 }
 
-void setup_wifimanager(boolean reset_settings){
+static void setup_wifimanager(boolean reset_settings){
     if(reset_settings)  SPIFFS.format();
 
     //read configuration from FS json
@@ -523,7 +528,11 @@ void setup_wifimanager(boolean reset_settings){
       trc(F("failed to connect and hit timeout"));
       delay(3000);
       //reset and try again, or maybe put it to deep sleep
+      #if defined(ESP32)
+      ESP.restart();
+      #else
       ESP.reset();
+      #endif
       delay(5000);
     }
   
